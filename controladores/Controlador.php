@@ -21,6 +21,7 @@ class Controlador
             $this->mostrarFormulario();
             exit();
         } else {                        //Si ya ha sido pulsado, recogemos todos los valores del formulario y los introducimos en $resultado.
+            $this -> validar();
             $conferencia = $_POST['confEste'];
             $resultado = "Equipo/s:";
             foreach ($conferencia as $clave => $valor) { //Comprobamos los checkbox para ver que equipos están marcados
@@ -83,7 +84,7 @@ class Controlador
         $validador = new ValidadorForm();
         $reglasValidacion = $this->crearReglasDevalidacion();
         $validador ->validar($_POST, $reglasValidacion);
-        if($validador->esValido()){
+        if($validador -> esValido()){
             $this->mostrarFormulario();
             exit();
         }

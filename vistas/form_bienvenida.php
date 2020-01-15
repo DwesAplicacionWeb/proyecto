@@ -35,7 +35,6 @@ include "includes/funciones.php";
             <br>
             <hr>
             </div>
-            <label>Talla</label>
             <br>
             <label>Tallas</label>
             <select name="talla">
@@ -53,10 +52,10 @@ include "includes/funciones.php";
             <hr />
             <br>
             <label for="min">Precio mínimo:</label>
-            <input type="number" min="0.00" max="1000.00" name="precioMin" step="1" <?php  echo Input::get('precioMin') ?>/>
+            <input type="number" min="1.00" max="500.00" name="precioMin" step="1" <?php  echo Input::get('precioMin') ?>/>
             <br>
             <label for="max">Precio máximo:</label>
-            <input type="number" min="0.00" max="1000.00" name="precioMax" step="1" <?php  echo Input::get('precioMax') ?>/>
+            <input type="number" min="1.00" max="500.00" name="precioMax" step="1" <?php  echo Input::get('precioMax') ?>/>
             <hr />
             <br>
             <label for="dorsal">Dorsal:</label>
