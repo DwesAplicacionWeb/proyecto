@@ -1,4 +1,5 @@
 <?php
+include "helper/ValidadorForm.php";
 // Proyecto Grupal DWES
 // * @author Isa Kapov, Jonathan López, Álvaro Colás
 // Titulo: Tienda camisetas NBA
@@ -73,8 +74,11 @@ class Controlador
 
     private function crearReglasDevalidacion(){
         $reglasValidacion = array(
+            "conferencia" => array("required" => false),
+            "talla" => array("required" => true),
+            "precioMin" => array("min"=>1 , "required" => false),
+            "precioMax" => array("min"=>"precioMin" , "max"=>500 , "required" => false),
             "dorsal" => array("required" => false)
-            
         );
 
         return $reglasValidacion;

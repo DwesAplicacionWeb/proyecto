@@ -16,16 +16,23 @@ Class ValidadorForm{
             foreach ($fuente as $clave => $valor) {
                 if ($nombreCampo == $clave) {
                     if ($value["required"] == true && $valor == null) {
-                        $validar[$clave] = "Error " . $nombreCampo . "required";
-                    else if () {
+                        $this -> addError($nombreCampo, "Se requiere valor en " . $nombreCampo);
+                    }
+                    if ($value["min"] > $valor){
+                        $this -> addError($nombreCampo, "El valor de " . $nombreCampo . "debe ser mayor que " . $value["min"]);
+                    } 
+                    if ($value["max"] < $valor){
+                        $this -> addError($nombreCampo, "El valor de " . $nombreCampo . "debe ser menor que " . $value["min"]);
+                    }
 
-                    }else{
-                        $validar[$clave] = $valor;
+                    if ($clave["precioMax"] > $clave["precioMin"]) {
+                        $this -> addError($nombreCampo, "El precio minimo no puede ser mayor que el precio maximo");
                     }
                 }
+
             }
         }
-        return $validar;
+        
     }
 
     public function addError($nombreCampo , $error){
