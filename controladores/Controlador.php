@@ -1,5 +1,6 @@
 <?php
-include "helper/ValidadorForm.php";
+require_once "helper/ValidadorForm.php";
+require_once "modelo/daoCamiseta.php";
 // Proyecto Grupal DWES
 // * @author Isa Kapov, Jonathan López, Álvaro Colás
 // Titulo: Tienda camisetas NBA
@@ -15,32 +16,26 @@ class Controlador
      * @access	public
      * @return	void
      */
+
     public function run()
     {
-
-        if (!isset($_POST['enviar'])) { //Comprueba si enviar ha sido pulsado y muestra el formulario si no lo esta.
-            $this->mostrarFormulario();
+        $dao = new daoCamiseta();
+        $equiposEste = $dao->mostrarEquiposEste();
+        $equiposOeste = $dao->mostrarEquiposOeste();
+        if (!isset($_POST['enviar'])) { //no se ha enviado el formulario // primera petición
+            //se llama al método para mostrar el formulario inicial
+            $this->mostrarFormulario("Validar", null, null,$equiposEste, $equiposOeste);
             exit();
-        } else {                        //Si ya ha sido pulsado, recogemos todos los valores del formulario y los introducimos en $resultado.
-            $this -> validar();
-            $conferencia = $_POST['confEste'];
-            $resultado = "Equipo/s:";
-            foreach ($conferencia as $clave => $valor) { //Comprobamos los checkbox para ver que equipos están marcados
-                $resultado .= "<br>- " .$valor ;
-            }
-
-            $conferencia = $_POST['confOeste'];
-            foreach ($conferencia as $clave => $valor) {
-                $resultado .= "<br>- " .$valor;
-            }
-
-            $talla = $_POST['talla'];
-            $precioMin = $_POST['precioMin'];
-            $precioMax = $_POST['precioMax'];
-            $dorsal = $_POST['dorsal'];
-            $resultado .= "<br><br>Talla: " . $talla . " <br><br>Precio minimo: " . $precioMin . "<br>Precio máximo: " . $precioMax
-            . "<br><br>Dorsal: " . $dorsal;
-            $this->mostrarResultado($resultado);
+        }
+        if (isset($_POST['enviar']) && ($_POST['enviar']) === 'Validar') { //se ha enviado el formulario //se valida el formulario
+            $this->validar();
+            exit();
+        }
+        if (isset($_POST['enviar']) && ($_POST['enviar']) === 'Continuar') { //se ha enviado el formulario
+            //Terminar
+            unset($_POST); //Se deja limpio $_POST como la primera vez
+            //echo 'Programa Finalizado';
+            $this->mostrarFormulario("Validar", null, null,$equiposEste, $equiposOeste);
             exit();
         }
     }
@@ -53,7 +48,7 @@ class Controlador
      * @access	private
      * @return	void
      */
-    private function mostrarFormulario()
+    private function mostrarFormulario($fase, $validador, $resultado,$equiposEste, $equiposOeste)
     {
         include 'vistas/form_bienvenida.php';   
     }
@@ -72,28 +67,79 @@ class Controlador
         include 'vistas/form_bienvenida.php';
     }
 
-    private function crearReglasDevalidacion(){
+    /**
+     * crearReglasDevalidacion.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Monday, January 27th, 2020.
+     * @access	private
+     * @param	mixed	{ // Se crean las reglas de validación que se comprobarán posteriormente en validar(	
+     * @return	mixed
+     */
+    private function crearReglasDevalidacion(){ // Se crean las reglas de validación que se comprobarán posteriormente en validar()
         $reglasValidacion = array(
             "conferencia" => array("required" => false),
             "talla" => array("required" => true),
-            "precioMin" => array("min"=>1 , "required" => false),
-            "precioMax" => array("min"=>"precioMin" , "max"=>500 , "required" => false),
-            "dorsal" => array("required" => false)
+            "precioMin" => array("min"=>1 , "required" => true),
+            "precioMax" => array("min"=>"precioMin" , "max"=>500 , "required" => true),
+            "dorsal" => array("min"=>0 , "max"=> 99 , "required" => false)
         );
 
         return $reglasValidacion;
     }
 
-    private function validar(){
+    /**
+     * validar.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Monday, January 27th, 2020.
+     * @access	private
+     * @return	void
+     */
+    private function validar(){ // Validamos los datos
+        $dao = new daoCamiseta();
+        $equiposEste = $dao->mostrarEquiposEste();
+        $equiposOeste = $dao->mostrarEquiposOeste();
         $validador = new ValidadorForm();
+        $resultado = "";
         $reglasValidacion = $this->crearReglasDevalidacion();
         $validador ->validar($_POST, $reglasValidacion);
         if($validador -> esValido()){
-            $this->mostrarFormulario();
+            $talla = $_POST['talla'];
+            $precioMin = $_POST['precioMin'];
+            $precioMax = $_POST['precioMax'];
+            $dorsal = $_POST['dorsal'];
+            $resultado .= "<br><br>Talla: " . $talla; // Completamos el resultado que se mostrará por pantalla, hay que añadir las camisetas dentro del rango de precio y el dorsal si lo hay
+            if (empty($_POST['confEste'])){
+                $conferenciaEste = ""; 
+            }else{
+                $conferenciaEste = $_POST['confEste']; 
+            }
+            if (empty($_POST['confOeste'])){
+                $conferenciaOeste = ""; 
+            }else{
+                $conferenciaOeste = $_POST['confOeste']; 
+            }
+            if(empty($conferenciaEste) && empty($conferenciaOeste)){
+                $resultado = "No se ha elegido ningun equipo";
+            }
+            if (!empty($conferenciaEste)) {  // Recoge el valor de los equipos seleccionados(si hay alguno)
+                foreach ($conferenciaEste as $clave => $valor) {
+                    $resultado .= $dao->leerFormulario($valor, $precioMin, $precioMax, $dorsal);
+                }
+            }
+            if (!empty($conferenciaOeste)) {  // Recoge el valor de los equipos seleccionados(si hay alguno)
+                foreach ($conferenciaOeste as $clave => $valor) {
+                    $resultado .= $dao->leerFormulario($valor, $precioMin, $precioMax, $dorsal);
+                }
+            }
+            $this->mostrarFormulario("Continuar", $validador, $resultado,$equiposEste, $equiposOeste); /// completar
             exit();
         }
-
-        $this->mostrarFormulario("validar", $validador, null);
+        
+        $this->mostrarFormulario("Validar", $validador, null,$equiposEste, $equiposOeste);
         exit();
     }
     
