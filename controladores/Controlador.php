@@ -7,6 +7,7 @@ require_once "modelo/daoCamiseta.php";
 // Fecha de inicio de proyecto: 5/12/2019
 class Controlador
 {
+    private $dao;
     /**
      * run.
      *
@@ -48,23 +49,9 @@ class Controlador
      * @access	private
      * @return	void
      */
-    private function mostrarFormulario($fase, $validador, $resultado,$equiposEste, $equiposOeste)
+    public function mostrarFormulario($fase, $validador, $resultado,$equiposEste, $equiposOeste)
     {
         include 'vistas/form_bienvenida.php';   
-    }
-    /**
-     * mostrarResultado.
-     *
-     * @author	Isa Kapov, Jonathan López, Álvaro Colás
-     * @since	v0.0.1
-     * @version	v1.0.0	Monday, December 16th, 2019.
-     * @access	private
-     * @param	mixed	$resultado	
-     * @return	void
-     */
-    private function mostrarResultado($resultado) //Si ya se ha mostrado el fomulario anteriormente, muestra a su vez formulario y resultado en la misma pagina.
-    {
-        include 'vistas/form_bienvenida.php';
     }
 
     /**
@@ -77,7 +64,7 @@ class Controlador
      * @param	mixed	{ // Se crean las reglas de validación que se comprobarán posteriormente en validar(	
      * @return	mixed
      */
-    private function crearReglasDevalidacion(){ // Se crean las reglas de validación que se comprobarán posteriormente en validar()
+    public function crearReglasDeValidacion(){ // Se crean las reglas de validación que se comprobarán posteriormente en validar()
         $reglasValidacion = array(
             "conferencia" => array("required" => false),
             "talla" => array("required" => true),
@@ -98,13 +85,13 @@ class Controlador
      * @access	private
      * @return	void
      */
-    private function validar(){ // Validamos los datos
+    public function validar(){ // Validamos los datos
         $dao = new daoCamiseta();
         $equiposEste = $dao->mostrarEquiposEste();
         $equiposOeste = $dao->mostrarEquiposOeste();
         $validador = new ValidadorForm();
         $resultado = "";
-        $reglasValidacion = $this->crearReglasDevalidacion();
+        $reglasValidacion = $this->crearReglasDeValidacion();
         $validador ->validar($_POST, $reglasValidacion);
         if($validador -> esValido()){
             $talla = $_POST['talla'];

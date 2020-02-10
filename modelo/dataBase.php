@@ -1,5 +1,6 @@
 <?php
-class dataBase implements idataBase
+require_once "idataBase.php";
+class dataBase extends idataBase
 {
     private $conexion;
     function conectaDb()
