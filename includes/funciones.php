@@ -1,4 +1,5 @@
 <?php
+
 /**
  * fichero con funciones de ayuda (helpers)
  *

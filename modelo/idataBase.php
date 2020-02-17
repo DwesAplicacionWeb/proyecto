@@ -7,4 +7,3 @@ abstract class idataBase
     abstract function  ejecutarSqlActualizacion($sql, $args);
     abstract function ejecutarSqlArray($sql);
 }
-?>
