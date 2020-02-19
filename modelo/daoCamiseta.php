@@ -1,5 +1,8 @@
 <?php
 require_once "modelo/dataBase.php";
+require_once "modelo/camiseta.php";
+require_once "helper/ValidadorForm.php";
+
 class daoCamiseta
 {
     /**
@@ -47,6 +50,7 @@ class daoCamiseta
     {
         $db = new dataBase();
         $resultado = "";
+        $result = "";
         if (empty($dorsal)) {
             $consulta = "SELECT ID FROM JUGADORES WHERE EQUIPO = '$valor' AND PRECIO BETWEEN '$precioMin' AND '$precioMax'"; // En un futuro mostraR mas datos(no solo nombre), habrá que recorrer de otra forma
             $resultado = $db->ejecutarSql($consulta);
@@ -54,6 +58,34 @@ class daoCamiseta
             $consulta = "SELECT ID FROM JUGADORES WHERE EQUIPO = '$valor' AND DORSAL = '$dorsal' AND PRECIO BETWEEN '$precioMin' AND '$precioMax'";
             $resultado = $db->ejecutarSql($consulta);
         }
-        return $resultado;
+        foreach ($resultado as $valor) {
+            $result .= "<br>- " . $valor["ID"];
+        }
+        return $result;
+    }
+
+    function existeCamiseta($camiseta)
+    {
+        $db = new dataBase();
+        $existe = false;
+        $consultaTalla = "SELECT TALLA, DORSAL FROM INSERTS";
+        $resultado = $db->ejecutarSql($consultaTalla);
+        foreach ($resultado as $valor) {
+            if ($camiseta->getTalla() == $valor["TALLA"]) {
+                if ($camiseta->getDorsal() == $valor["DORSAL"]) {
+                    $existe =  true;
+                }
+            }
+        }
+        return $existe;
+    }
+
+    function insertarCamiseta($camiseta)
+    {
+        $db = new dataBase();
+        $talla = $camiseta->getTalla();
+        $dorsal = $camiseta->getDorsal();
+        $insercion = "INSERT INTO INSERTS (TALLA, DORSAL) VALUES ('$talla', '$dorsal')";
+        $db->ejecutarSql($insercion);
     }
 }

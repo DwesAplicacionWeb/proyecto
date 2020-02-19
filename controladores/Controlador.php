@@ -1,13 +1,14 @@
 <?php
 require_once "helper/ValidadorForm.php";
 require_once "modelo/daoCamiseta.php";
+require_once "modelo/camiseta.php";
 // Proyecto Grupal DWES
 // * @author Isa Kapov, Jonathan López, Álvaro Colás
 // Titulo: Tienda camisetas NBA
 // Fecha de inicio de proyecto: 5/12/2019
 class Controlador
 {
-    private $dao;
+    private $c;
     /**
      * run.
      *
@@ -25,7 +26,7 @@ class Controlador
         $equiposOeste = $dao->mostrarEquiposOeste();
         if (!isset($_POST['enviar'])) { //no se ha enviado el formulario // primera petición
             //se llama al método para mostrar el formulario inicial
-            $this->mostrarFormulario("Validar", null, null,$equiposEste, $equiposOeste);
+            $this->mostrarFormulario("Validar", null, null, $equiposEste, $equiposOeste);
             exit();
         }
         if (isset($_POST['enviar']) && ($_POST['enviar']) === 'Validar') { //se ha enviado el formulario //se valida el formulario
@@ -36,7 +37,7 @@ class Controlador
             //Terminar
             unset($_POST); //Se deja limpio $_POST como la primera vez
             //echo 'Programa Finalizado';
-            $this->mostrarFormulario("Validar", null, null,$equiposEste, $equiposOeste);
+            $this->mostrarFormulario("Validar", null, null, $equiposEste, $equiposOeste);
             exit();
         }
     }
@@ -49,9 +50,9 @@ class Controlador
      * @access	private
      * @return	void
      */
-    public function mostrarFormulario($fase, $validador, $resultado,$equiposEste, $equiposOeste)
+    public function mostrarFormulario($fase, $validador, $resultado, $equiposEste, $equiposOeste)
     {
-        include 'vistas/form_bienvenida.php';   
+        include 'vistas/form_bienvenida.php';
     }
 
     /**
@@ -64,13 +65,14 @@ class Controlador
      * @param	mixed	{ // Se crean las reglas de validación que se comprobarán posteriormente en validar(	
      * @return	mixed
      */
-    public function crearReglasDeValidacion(){ // Se crean las reglas de validación que se comprobarán posteriormente en validar()
+    public function crearReglasDeValidacion()
+    { // Se crean las reglas de validación que se comprobarán posteriormente en validar()
         $reglasValidacion = array(
             "conferencia" => array("required" => false),
             "talla" => array("required" => true),
-            "precioMin" => array("min"=>1 , "required" => true),
-            "precioMax" => array("min"=>"precioMin" , "max"=>500 , "required" => true),
-            "dorsal" => array("min"=>0 , "max"=> 99 , "required" => false)
+            "precioMin" => array("min" => 1, "required" => true),
+            "precioMax" => array("min" => "precioMin", "max" => 500, "required" => true),
+            "dorsal" => array("min" => 0, "max" => 99, "required" => true)
         );
 
         return $reglasValidacion;
@@ -85,31 +87,33 @@ class Controlador
      * @access	private
      * @return	void
      */
-    public function validar(){ // Validamos los datos
+    public function validar()
+    { // Validamos los datos
         $dao = new daoCamiseta();
         $equiposEste = $dao->mostrarEquiposEste();
         $equiposOeste = $dao->mostrarEquiposOeste();
         $validador = new ValidadorForm();
         $resultado = "";
         $reglasValidacion = $this->crearReglasDeValidacion();
-        $validador ->validar($_POST, $reglasValidacion);
-        if($validador -> esValido()){
+        $validador->validar($_POST, $reglasValidacion);
+        if ($validador->esValido()) {
+            $this->registrar();
             $talla = $_POST['talla'];
             $precioMin = $_POST['precioMin'];
             $precioMax = $_POST['precioMax'];
             $dorsal = $_POST['dorsal'];
             $resultado .= "<br><br>Talla: " . $talla; // Completamos el resultado que se mostrará por pantalla, hay que añadir las camisetas dentro del rango de precio y el dorsal si lo hay
-            if (empty($_POST['confEste'])){
-                $conferenciaEste = ""; 
-            }else{
-                $conferenciaEste = $_POST['confEste']; 
+            if (empty($_POST['confEste'])) {
+                $conferenciaEste = "";
+            } else {
+                $conferenciaEste = $_POST['confEste'];
             }
-            if (empty($_POST['confOeste'])){
-                $conferenciaOeste = ""; 
-            }else{
-                $conferenciaOeste = $_POST['confOeste']; 
+            if (empty($_POST['confOeste'])) {
+                $conferenciaOeste = "";
+            } else {
+                $conferenciaOeste = $_POST['confOeste'];
             }
-            if(empty($conferenciaEste) && empty($conferenciaOeste)){
+            if (empty($conferenciaEste) && empty($conferenciaOeste)) {
                 $resultado = "No se ha elegido ningun equipo";
             }
             if (!empty($conferenciaEste)) {  // Recoge el valor de los equipos seleccionados(si hay alguno)
@@ -122,12 +126,29 @@ class Controlador
                     $resultado .= $dao->leerFormulario($valor, $precioMin, $precioMax, $dorsal);
                 }
             }
-            $this->mostrarFormulario("Continuar", $validador, $resultado,$equiposEste, $equiposOeste); /// completar
+            $this->mostrarFormulario("Continuar", $validador, $resultado, $equiposEste, $equiposOeste); /// completar
             exit();
         }
-        
-        $this->mostrarFormulario("Validar", $validador, null,$equiposEste, $equiposOeste);
+        $this->mostrarFormulario("Validar", $validador, null, $equiposEste, $equiposOeste);
         exit();
     }
-    
+
+    function crearCamiseta()
+    {
+        $camiseta = new Camiseta($_POST['dorsal'], $_POST['talla']);
+        return $camiseta;
+    }
+
+    function registrar()
+    {
+        $camiseta = $this->crearCamiseta();
+        $dao = new daoCamiseta();
+        $existe = $dao->existeCamiseta($camiseta);
+        if ($existe) {
+            echo "La camiseta ya existe";
+        } else {
+            $dao->insertarCamiseta($camiseta);
+            echo "La camiseta se ha insertado correctamente";
+        }
+    }
 }

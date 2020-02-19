@@ -56,16 +56,11 @@ class dataBase extends idataBase
         $db = new dataBase;
         $conect = $db->conectaDb();
         $result = $conect->query($sql);
-        $resultado = "";
         if (!$result) { // o con try-catch     
-            $resultado = "<p>Error en la consulta.</p>\n";
-        } else {
-            foreach ($result as $valor) {
-                $resultado .= "<br>- " . $valor["ID"];
-            }
+            echo "<p>Error en la consulta.</p>\n";
         }
         $conect = $db->desconectar();
-        return $resultado;
+        return $result;
     }
 
     /**
