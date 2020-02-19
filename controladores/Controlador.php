@@ -8,7 +8,6 @@ require_once "modelo/camiseta.php";
 // Fecha de inicio de proyecto: 5/12/2019
 class Controlador
 {
-    private $c;
     /**
      * run.
      *
