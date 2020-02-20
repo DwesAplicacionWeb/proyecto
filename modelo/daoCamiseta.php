@@ -82,7 +82,12 @@ class daoCamiseta
         foreach ($resultado as $valor) {
             if ($camiseta->getTalla() == $valor["TALLA"]) {
                 if ($camiseta->getDorsal() == $valor["DORSAL"]) {
+                    $talla = $camiseta->getTalla();
+                    $dorsal = $camiseta->getDorsal();
                     $existe =  true;
+                    $contSentencia = "SELECT CONT FROM INSERTS WHERE TALLA = $talla AND DORSAL = $dorsal";
+                    $cont = $db->ejecutarSql($contSentencia);
+                    $actualizar = "UPDATE INSERTS SET CONT = $cont + 1 WHERE TALLA = $talla AND DORSAL = $dorsal";
                 }
             }
         }
@@ -103,7 +108,7 @@ class daoCamiseta
         $db = new dataBase();
         $talla = $camiseta->getTalla();
         $dorsal = $camiseta->getDorsal();
-        $insercion = "INSERT INTO INSERTS (TALLA, DORSAL) VALUES ('$talla', '$dorsal')";
+        $insercion = "INSERT INTO INSERTS (TALLA, DORSAL, CONT) VALUES ('$talla', '$dorsal', 1)";
         $db->ejecutarSql($insercion);
     }
 }
