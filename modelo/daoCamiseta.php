@@ -64,6 +64,15 @@ class daoCamiseta
         return $result;
     }
 
+    /**
+     * existeCamiseta.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Thursday, February 20th, 2020.
+     * @param	mixed	$camiseta	
+     * @return	mixed
+     */
     function existeCamiseta($camiseta)
     {
         $db = new dataBase();
@@ -80,6 +89,15 @@ class daoCamiseta
         return $existe;
     }
 
+    /**
+     * insertarCamiseta.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Thursday, February 20th, 2020.
+     * @param	mixed	$camiseta	
+     * @return	void
+     */
     function insertarCamiseta($camiseta)
     {
         $db = new dataBase();

@@ -132,12 +132,28 @@ class Controlador
         exit();
     }
 
+    /**
+     * crearCamiseta.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Thursday, February 20th, 2020.
+     * @return	mixed
+     */
     function crearCamiseta()
     {
         $camiseta = new Camiseta($_POST['dorsal'], $_POST['talla']);
         return $camiseta;
     }
 
+    /**
+     * registrar.
+     *
+     * @author	Isa Kapov, Jonathan López, Álvaro Colás
+     * @since	v0.0.1
+     * @version	v1.0.0	Thursday, February 20th, 2020.
+     * @return	void
+     */
     function registrar()
     {
         $camiseta = $this->crearCamiseta();
