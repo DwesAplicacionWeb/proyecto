@@ -1,5 +1,5 @@
 <?php
-abstract class idataBase
+abstract class IDataBase
 {
     abstract function  conectaDb();
     abstract function  desconectar();

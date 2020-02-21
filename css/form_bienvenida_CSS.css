@@ -1,71 +1,59 @@
-.este{
+.este {
     margin-bottom: 20px;
-}
-
-
-.oeste{
-    margin-bottom: 20px;
-}
-
-.formulario1{
-    width: 400px;
-    margin-left: 20px;
     margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px solid black;
-    padding: 5px;
-    padding-left: 20px;
+    margin-right: 20px;
 }
 
-hr{
+.oeste {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+hr {
     margin-left: 10px;
     margin-right: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     margin-bottom: 10px;
 }
 
-input[type="number"]{
+input[type="number"] {
     margin-bottom: 10px;
 }
 
-.centrar{
+.centrar {
     text-align: center;
 }
 
-input[type="submit"]{
+input[type="submit"] {
     padding: 10px;
     width: 120px;
-    color:black;
+    color: black;
     margin-right: 20px;
 }
 
-input:hover[type="submit"]{
+input:hover[type="submit"] {
     border: 1px solid blue;
     background-color: #d0112b;
-    color:white;
+    color: white;
 }
 
-input[type="reset"]{
+input[type="reset"] {
     padding: 10px;
     width: 120px;
-    color:black;
+    color: black;
 }
 
-input:hover[type="reset"]{
+input:hover[type="reset"] {
     border: 1px solid blue;
     background-color: #d0112b;
-    color:white;
+    color: white;
 }
 
 input[type="checkbox"]:hover {
-color: crimson;
-}
-
-
-body{
-    background-image: url('../img/background.jpg');
+    color: crimson;
 }

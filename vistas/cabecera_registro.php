@@ -14,12 +14,10 @@
     <header>
         <div class="contenido">
             <h2>NBA STORE</h2>
-            <div class="registrar_login">
-                <a href="vistas/register_login.php">Registrate/Entra</a>
-            </div>
-
             <main>
-
+                <div class="volver">
+                    <a href="../index.php">Volver</a>
+                </div>
             </main>
 
         </div>

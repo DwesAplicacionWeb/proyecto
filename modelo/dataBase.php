@@ -1,6 +1,6 @@
 <?php
 require_once "idataBase.php";
-class dataBase extends idataBase
+class DataBase extends IDataBase
 {
     private $conexion;
     /**
@@ -53,7 +53,7 @@ class dataBase extends idataBase
      */
     function ejecutarSql($sql)
     {
-        $db = new dataBase;
+        $db = new DataBase;
         $conect = $db->conectaDb();
         $result = $conect->query($sql);
         if (!$result) { // o con try-catch     
@@ -75,7 +75,7 @@ class dataBase extends idataBase
      */
     function ejecutarSqlActualizacion($sql, $args)
     {
-        $db = dataBase::conectaDb();
+        $db = DataBase::conectaDb();
         $result = $db->prepare($sql);
         $result->execute($args);
         if (!$result) { // o con try-catch     
@@ -93,7 +93,7 @@ class dataBase extends idataBase
      */
     function ejecutarSqlArray($sql)
     {
-        $db = new dataBase;
+        $db = new DataBase;
         $conect = $db->conectaDb();
         $equipos = [];
         if ($conect->query($sql)) {

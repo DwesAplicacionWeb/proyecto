@@ -1,0 +1,195 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-02-2020 a las 12:48:52
+-- Versión del servidor: 10.1.39-MariaDB
+-- Versión de PHP: 7.3.5
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `nba`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `equipos`
+--
+
+CREATE TABLE `equipos` (
+  `NOMBRE` varchar(30) NOT NULL,
+  `CONFERENCIA` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `equipos`
+--
+
+INSERT INTO `equipos` (`NOMBRE`, `CONFERENCIA`) VALUES
+('BOSTON CELTICS', 'ESTE'),
+('DALLAS MAVERICKS', 'OESTE'),
+('GOLDEN STATE WARRIORS', 'OESTE'),
+('HOUSTON ROCKETS', 'OESTE'),
+('LOS ANGELES CLIPPERS', 'OESTE'),
+('LOS ANGELES LAKERS', 'OESTE'),
+('MILWAUKEE BUCKS', 'ESTE'),
+('NEW YORK KNICKS', 'ESTE'),
+('PHILADELPHIA 76ERS', 'ESTE'),
+('TORONTO RAPTORS', 'ESTE');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inserts`
+--
+
+CREATE TABLE `inserts` (
+  `ID` int(5) NOT NULL,
+  `DORSAL` int(2) NOT NULL,
+  `TALLA` varchar(30) NOT NULL,
+  `CONT` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `inserts`
+--
+
+INSERT INTO `inserts` (`ID`, `DORSAL`, `TALLA`, `CONT`) VALUES
+(1, 23, 'M', 6),
+(2, 23, 'S', 2),
+(3, 4, 'S', 1),
+(4, 56, 'M', 3),
+(5, 33, 'L', 2),
+(6, 43, 'S', 6),
+(7, 5, 'L', 1),
+(8, 99, 'XL', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jugadores`
+--
+
+CREATE TABLE `jugadores` (
+  `ID` varchar(30) NOT NULL,
+  `EQUIPO` varchar(30) NOT NULL,
+  `POSICION` varchar(8) NOT NULL,
+  `DORSAL` int(2) NOT NULL,
+  `PRECIO` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `jugadores`
+--
+
+INSERT INTO `jugadores` (`ID`, `EQUIPO`, `POSICION`, `DORSAL`, `PRECIO`) VALUES
+('AL HORFORD', 'PHILADELPHIA 76ERS', 'ALA-PIVO', 42, 67),
+('ANTHONY DAVIS', 'LOS ANGELES LAKERS', 'ALA-PIVO', 3, 75),
+('BEN SIMMONS', 'PHILADELPHIA 76ERS', 'BASE', 25, 86),
+('BROOK LOPEZ', 'MILWAUKEE BUCKS', 'PIVOT', 11, 80),
+('CLINT CAPELA', 'HOUSTON ROCKETS', 'PIVOT', 15, 78),
+('DANNY GREEN', 'LOS ANGELES LAKERS', 'ESCOLTA', 14, 93),
+('DANUEL HOUSE', 'HOUSTON ROCKETS', 'ALERO', 4, 67),
+('DORIAN FINNEY-SMITH', 'DALLAS MAVERICKS', 'ALERO', 10, 73),
+('DRAYMOND GREEN', 'GOLDEN STATE WARRIORS', 'ALA-PIVO', 23, 69),
+('DWIGHT POWELL', 'DALLAS MAVERICKS', 'PIVOT', 7, 67),
+('D´ANGELO RUSSELL', 'GOLDEN STATE WARRIORS', 'ESCOLTA', 0, 81),
+('ERIC BELDSOE', 'MILWAUKEE BUCKS', 'BASE', 6, 72),
+('FRANK NTILIKINA', 'NEW YORK KNICKS', 'BASE', 11, 62),
+('FURKAN KORKMAZ', 'PHILADELPHIA 76ERS', 'ESCOLTA', 30, 58),
+('GIANNIS ANTETOKOUNMPO', 'MILWAUKEE BUCKS', 'ALA-PIVO', 34, 102),
+('IVICA ZUBAC', 'LOS ANGELES CLIPPERS', 'PIVOT', 40, 59),
+('JAMES HARDEN', 'HOUSTON ROCKETS', 'ESCOLTA', 13, 100),
+('JAVALE MCGEE', 'LOS ANGELES LAKERS', 'PIVOT', 7, 81),
+('JAYSON TATUM', 'BOSTON CELTICS', 'ALERO', 0, 83),
+('JOEL EMBIID', 'PHILADELPHIA 76ERS', 'PIVOT', 21, 96),
+('JULIUS RANDLE', 'NEW YORK KNICKS', 'ALA-PIVO', 30, 67),
+('KAWHI LEONARD', 'LOS ANGELES CLIPPERS', 'ALERO', 2, 98),
+('KEMBA WALKER', 'BOSTON CELTICS', 'BASE', 8, 90),
+('KENTAVOUS KADWELL POPE', 'LOS ANGELES LAKERS', 'BASE', 1, 90),
+('KHRIS MIDDLETON', 'MILWAUKEE BUCKS', 'ALERO', 22, 93),
+('KLAY THOMSON', 'GOLDEN STATE WARRIORS', 'ALERO', 11, 95),
+('KRIS DUNN', 'TORONTO RAPTORS', 'ALERO', 32, 60),
+('KRISTAPS PORZINGIS', 'DALLAS MAVERICKS', 'ALA-PIVO', 6, 97),
+('LAURI MARKKANEN', 'TORONTO RAPTORS', 'ALA-PIVO', 24, 65),
+('LEBRON JAMES', 'LOS ANGELES LAKERS', 'ALERO', 23, 78),
+('LOU WILLIAMS', 'LOS ANGELES CLIPPERS', 'BASE', 23, 73),
+('LUKA DONCIC', 'DALLAS MAVERICKS', 'BASE', 77, 101),
+('MARCUS MORRIS', 'NEW YORK KNICKS', 'ALERO', 13, 70),
+('MARCUS SMART', 'BOSTON CELTICS', 'ESCOLTA', 36, 76),
+('MAURICE HARKLESS', 'LOS ANGELES CLIPPERS', 'ESCOLTA', 8, 71),
+('P.J. TUCKER', 'HOUSTON ROCKETS', 'ALA-PIVO', 17, 74),
+('PAUL GEORGE', 'LOS ANGELES CLIPPERS', 'ALA-PIVO', 13, 103),
+('RJ BARRETT', 'NEW YORK KNICKS', 'ESCOLTA', 9, 59),
+('RUSSELL WESTBROOK', 'HOUSTON ROCKETS', 'BASE', 0, 95),
+('STEPHEN CURRY', 'GOLDEN STATE WARRIORS', 'BASE', 30, 97),
+('TACKO FALL', 'BOSTON CELTICS', 'PIVOT', 99, 65),
+('TAJ GIBSON', 'NEW YORK KNICKS', 'PIVOT', 67, 73),
+('TIM HARDAWAY JR', 'DALLAS MAVERICKS', 'ESCOLTA', 11, 59),
+('TOBIAS HARRIS', 'PHILADELPHIA 76ERS', 'ALERO', 12, 70),
+('TOMAS SATORANSKY', 'TORONTO RAPTORS', 'ESCOLTA', 31, 71),
+('VINCENT POIRIER', 'BOSTON CELTICS', 'ALA-PIVO', 77, 62),
+('WENDELL CARTER', 'TORONTO RAPTORS', 'PIVOT', 34, 61),
+('WESLEY MATTHEWS', 'MILWAUKEE BUCKS', 'ESCOLTA', 9, 67),
+('WILLIE CAULEY-STEIN', 'GOLDEN STATE WARRIORS', 'PIVOT', 2, 63),
+('ZACH LAVINE', 'TORONTO RAPTORS', 'BASE', 8, 83);
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `equipos`
+--
+ALTER TABLE `equipos`
+  ADD PRIMARY KEY (`NOMBRE`);
+
+--
+-- Indices de la tabla `inserts`
+--
+ALTER TABLE `inserts`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `jugadores`
+--
+ALTER TABLE `jugadores`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `EQUIPO` (`EQUIPO`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `inserts`
+--
+ALTER TABLE `inserts`
+  MODIFY `ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `jugadores`
+--
+ALTER TABLE `jugadores`
+  ADD CONSTRAINT `jugadores_ibfk_1` FOREIGN KEY (`EQUIPO`) REFERENCES `equipos` (`NOMBRE`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,59 +1,234 @@
-*{
+* {
     padding: 0;
     margin: 0 auto;
 }
-body{
-    background-image: url('../imgs/background.jpg');
-    background-color: black;
+
+.contenido {
+    background-image: url('../img/nba-logo-transparent-png-3-transparent.png');
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #f1f1f1;
+    border-radius: 2px;
 }
-header{
-    width:100%;
+
+.contenido h2 {
+    margin-left: 0px;
+}
+
+body {
+    background-color: #e0e0e0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+header {
+    width: 100%;
     height: 90px;
-
-   
-    background: rgba(209,23,23,0.87);
-background: -moz-linear-gradient(top, rgba(209,23,23,0.87) 0%, rgba(34,90,201,1) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(209,23,23,0.87)), color-stop(100%, rgba(34,90,201,1)));
-background: -webkit-linear-gradient(top, rgba(209,23,23,0.87) 0%, rgba(34,90,201,1) 100%);
-background: -o-linear-gradient(top, rgba(209,23,23,0.87) 0%, rgba(34,90,201,1) 100%);
-background: -ms-linear-gradient(top, rgba(209,23,23,0.87) 0%, rgba(34,90,201,1) 100%);
-background: linear-gradient(to bottom, rgba(209,23,23,0.87) 0%, rgba(34,90,201,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d11717', endColorstr='#225ac9', GradientType=0 );
+    background-color: #f3f2f2;
+    border-bottom: 1px solid #cac8c8;
 }
 
-header>h2{
+header .contenido {
+    padding: 20px;
+}
+
+header>h2 {
     color: white;
 }
 
-main{
-    width:100%;
-    height: 45px;
-
-}
-
-.contenido, a{
-    padding: 10px;
+main {
     color: white;
     max-width: 1024px;
     width: 100%;
 }
 
-.contenido>a{
-    padding: 10px;
+.formulario1 {
+    background-color: white;
+    width: 400px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: black;
+    padding: 5px;
+    padding-left: 20px;
+    border: 1px solid black;
+    float: left;
+    margin-left: 20px;
+    border-radius: 2px;
+}
+
+.errores {
+    background-color: white;
+    width: 400px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: red;
+    padding: 5px;
+    padding-left: 20px;
+    border: 1px solid black;
+    margin-left: 20px;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+.resultado {
+    background-color: white;
+    width: 350px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: green;
+    padding: 5px;
+    padding-left: 20px;
+    border: 1px solid black;
+    margin-right: 20px;
+    border-radius: 2px;
+    text-transform: uppercase;
     float: right;
+}
+
+.filteritem:hover {
+    background-color: #e7e7e7;
+    cursor: pointer
+}
+
+footer {
+    padding: 20px 0px 20px 0px;
+    width: 100%;
+    height: 75px;
+    background-color: #f1f1f1;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    margin: 20px 0px 0px 0px;
+}
+
+/* unvisited link */
+
+a:link {
+    color: red;
+    text-decoration: none;
+}
+
+/* visited link */
+
+a:visited {
     color: white;
-    width: 100px;
+    text-decoration: none;
 }
 
+/* mouse over link */
 
-.formulario1{
-    background-color:white;
-    margin-top:200px;
-    width:20%;
-    padding:10px;
-    float:left;
-    color:black;
+a:hover {
+    color: hotpink;
+    text-decoration: none;
 }
 
+/* selected link */
 
-.filteritem:hover{background-color:#e7e7e7;cursor:pointer}
+a:active {
+    color: blue;
+    text-decoration: none;
+}
+
+/* INPUTS */
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.number-wrapper {
+    position: relative;
+}
+
+.number-wrapper:after, .number-wrapper:before {
+    position: absolute;
+    right: 5px;
+    width: 1.6em;
+    height: .9em;
+    font-size: 10px;
+    pointer-events: none;
+    background: #fff;
+}
+
+.number-wrapper:after {
+    color: blue;
+    content: "\25B2";
+    margin-top: 1px;
+}
+
+.number-wrapper:before {
+    color: red;
+    content: "\25BC";
+    margin-bottom: 5px;
+    bottom: -.5em;
+}
+
+/* FIN INPUTS */
+
+.confEste {
+    background-color: #34acec;
+    padding: 5px;
+    width: 100%;
+    padding-right: 200px;
+    color: white;
+}
+
+.confOeste {
+    background-color: red;
+    padding: 5px;
+    width: 100%;
+    padding-right: 200px;
+    color: white;
+}
+
+@media (max-width: 890px) {
+    .formulario1 {
+        background-color: white;
+        width: 100%;
+        margin-right: 20px;
+        /* margin-bottom: 20px; */
+        /* color: black; */
+        /* padding: 5px; */
+        /* padding-left: 20px; */
+        /* border: 1px solid black; */
+        /* float: left; */
+        /* margin-left: 20px; */
+        /* border-radius: 2px; */
+        /* margin-right: 20px; */
+        text-align: center;
+    }
+    .resultado {
+        background-color: white;
+        width: 100%;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        height: auto;
+        color: green;
+        padding: 5px;
+        padding-left: 20px;
+        border: 1px solid black;
+        margin-right: 20px;
+        border-radius: 2px;
+        text-transform: uppercase;
+        float: left;
+    }
+    main {
+        margin: 0 auto;
+        color: white;
+        /* max-width: 1024px; */
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .contenido {
+        margin: 0 auto;
+    }
+}

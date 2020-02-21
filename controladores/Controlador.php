@@ -1,6 +1,6 @@
 <?php
 require_once "helper/ValidadorForm.php";
-require_once "modelo/daoCamiseta.php";
+require_once "modelo/DaoCamiseta.php";
 require_once "modelo/camiseta.php";
 // Proyecto Grupal DWES
 // * @author Isa Kapov, Jonathan López, Álvaro Colás
@@ -20,7 +20,7 @@ class Controlador
 
     public function run()
     {
-        $dao = new daoCamiseta();
+        $dao = new DaoCamiseta();
         $equiposEste = $dao->mostrarEquiposEste();
         $equiposOeste = $dao->mostrarEquiposOeste();
         if (!isset($_POST['enviar'])) { //no se ha enviado el formulario // primera petición
@@ -88,7 +88,7 @@ class Controlador
      */
     public function validar()
     { // Validamos los datos
-        $dao = new daoCamiseta();
+        $dao = new DaoCamiseta();
         $equiposEste = $dao->mostrarEquiposEste();
         $equiposOeste = $dao->mostrarEquiposOeste();
         $validador = new ValidadorForm();
@@ -117,12 +117,12 @@ class Controlador
             }
             if (!empty($conferenciaEste)) {  // Recoge el valor de los equipos seleccionados(si hay alguno)
                 foreach ($conferenciaEste as $clave => $valor) {
-                    $resultado .= $dao->leerFormulario($valor, $precioMin, $precioMax, $dorsal);
+                    $resultado .= $dao->resultadoJugadores($valor, $precioMin, $precioMax, $dorsal);
                 }
             }
             if (!empty($conferenciaOeste)) {  // Recoge el valor de los equipos seleccionados(si hay alguno)
                 foreach ($conferenciaOeste as $clave => $valor) {
-                    $resultado .= $dao->leerFormulario($valor, $precioMin, $precioMax, $dorsal);
+                    $resultado .= $dao->resultadoJugadores($valor, $precioMin, $precioMax, $dorsal);
                 }
             }
             $this->mostrarFormulario("Continuar", $validador, $resultado, $equiposEste, $equiposOeste); /// completar
@@ -157,13 +157,22 @@ class Controlador
     function registrar()
     {
         $camiseta = $this->crearCamiseta();
-        $dao = new daoCamiseta();
+        $dao = new DaoCamiseta();
+        $db = new DataBase();
         $existe = $dao->existeCamiseta($camiseta);
         if ($existe) {
-            echo "La camiseta ya existe";
+            $talla = $camiseta->getTalla();
+            $dorsal = $camiseta->getDorsal();
+            $contSentencia = "SELECT CONT FROM INSERTS WHERE TALLA = '$talla' AND DORSAL = '$dorsal'";
+            $contPdo = $db->ejecutarSql($contSentencia);
+            $cont = 0;
+            foreach ($contPdo as $valor) {
+                $cont = $valor['CONT'];
+            }
+            $actualizar = "UPDATE INSERTS SET CONT = $cont + 1 WHERE TALLA = '$talla' AND DORSAL = '$dorsal'";
+            $db->ejecutarSql($actualizar);
         } else {
             $dao->insertarCamiseta($camiseta);
-            echo "La camiseta se ha insertado correctamente";
         }
     }
 }

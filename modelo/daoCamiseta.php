@@ -1,9 +1,9 @@
 <?php
-require_once "modelo/dataBase.php";
+require_once "modelo/DataBase.php";
 require_once "modelo/camiseta.php";
 require_once "helper/ValidadorForm.php";
 
-class daoCamiseta
+class DaoCamiseta
 {
     /**
      * mostrarEquiposEste.
@@ -15,7 +15,7 @@ class daoCamiseta
      */
     function mostrarEquiposEste()
     {
-        $db = new dataBase();
+        $db = new DataBase();
         $este  = "SELECT NOMBRE FROM EQUIPOS WHERE CONFERENCIA = 'ESTE'";
         return $db->ejecutarSqlArray($este);
     }
@@ -30,7 +30,7 @@ class daoCamiseta
      */
     function mostrarEquiposOeste()
     {
-        $db = new dataBase();
+        $db = new DataBase();
         $oeste  = "SELECT NOMBRE FROM EQUIPOS WHERE CONFERENCIA = 'OESTE'";
         return $db->ejecutarSqlArray($oeste);
     }
@@ -46,9 +46,9 @@ class daoCamiseta
      * @param	mixed	$dorsal   	
      * @return	mixed
      */
-    function leerFormulario($valor, $precioMin, $precioMax, $dorsal)
+    function resultadoJugadores($valor, $precioMin, $precioMax, $dorsal)
     {
-        $db = new dataBase();
+        $db = new DataBase();
         $resultado = "";
         $result = "";
         if (empty($dorsal)) {
@@ -75,19 +75,14 @@ class daoCamiseta
      */
     function existeCamiseta($camiseta)
     {
-        $db = new dataBase();
+        $db = new DataBase();
         $existe = false;
         $consultaTalla = "SELECT TALLA, DORSAL FROM INSERTS";
         $resultado = $db->ejecutarSql($consultaTalla);
         foreach ($resultado as $valor) {
             if ($camiseta->getTalla() == $valor["TALLA"]) {
                 if ($camiseta->getDorsal() == $valor["DORSAL"]) {
-                    $talla = $camiseta->getTalla();
-                    $dorsal = $camiseta->getDorsal();
                     $existe =  true;
-                    $contSentencia = "SELECT CONT FROM INSERTS WHERE TALLA = $talla AND DORSAL = $dorsal";
-                    $cont = $db->ejecutarSql($contSentencia);
-                    $actualizar = "UPDATE INSERTS SET CONT = $cont + 1 WHERE TALLA = $talla AND DORSAL = $dorsal";
                 }
             }
         }
@@ -105,7 +100,7 @@ class daoCamiseta
      */
     function insertarCamiseta($camiseta)
     {
-        $db = new dataBase();
+        $db = new DataBase();
         $talla = $camiseta->getTalla();
         $dorsal = $camiseta->getDorsal();
         $insercion = "INSERT INTO INSERTS (TALLA, DORSAL, CONT) VALUES ('$talla', '$dorsal', 1)";
